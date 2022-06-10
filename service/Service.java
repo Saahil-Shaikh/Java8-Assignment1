@@ -3,6 +3,7 @@ package com.assign1.service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.assign1.entity.Complaints;
@@ -29,8 +30,11 @@ public class Service implements ServiceImpl {
 
 	@Override
 	public long getComplaintResolutionPeriod(int complaintId) {
-		Complaints complaint = complaints.stream().filter(c -> c.getComplaintId().equals(Integer.toString(complaintId))).findFirst().get();
-		long days = ChronoUnit.DAYS.between(complaint.getDateReceived(), complaint.getDateClosed());
+		Optional<Complaints> complaint = complaints.stream().filter(c -> c.getComplaintId().equals(Integer.toString(complaintId))).findFirst();
+		if(complaint.isEmpty()) {
+			return 0;
+		}
+		long days = ChronoUnit.DAYS.between(complaint.get().getDateReceived(), complaint.get().getDateClosed());
 		return days;
 		
 	}
