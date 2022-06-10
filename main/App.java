@@ -33,28 +33,44 @@ public class App {
 			case 1: {
 				System.out.println("Enter Complaint ID");
 				int id = sc.nextInt();
-				System.out.println(service.getComplaintById(id));
+				if(service.getComplaintById(id).isEmpty()) {
+					System.out.println("No Records Found!");
+				}
+				else
+					System.out.println(service.getComplaintById(id));
 				break;
 			}
 			
 			case 2 : {
 				System.out.println("Enter Complaint Raised Year");
 				int year = sc.nextInt();
-				service.getComplaintByYear(year).forEach(System.out::println);
+				if(service.getComplaintByYear(year).isEmpty()) {
+					System.out.println("No Records Found!");
+				}
+				else
+					service.getComplaintByYear(year).forEach(System.out::println);
 				break;
 			}
 			
 			case 3: {
 				System.out.println("Enter Bank/Company Name");
 				String bankName = bf.readLine();
-				service.getComplaintByBankName(bankName).forEach(System.out::println);
+				if(service.getComplaintByBankName(bankName).isEmpty()) {
+					System.out.println("No Records Found!");
+				}
+				else
+					service.getComplaintByBankName(bankName).forEach(System.out::println);
 				break;
 			}
 			
 			case 4 : {
 				System.out.println("Enter Complaint ID to check complaint clousre duration");
 				int id = sc.nextInt();
-				System.out.println("Days required to close the complaint "+service.getComplaintResolutionPeriod(id));
+				if(service.getComplaintResolutionPeriod(id) == 0) {
+					System.out.println("Either the complaint was closed within a day or there is no record available");
+				}
+				else
+					System.out.println("Days required to close the complaint : "+service.getComplaintResolutionPeriod(id));
 				break;
 			}
 			
